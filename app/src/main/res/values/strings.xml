@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Calendar Color</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_color_picker">ColorPickerActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+</resources>
