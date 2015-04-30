@@ -16,14 +16,14 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import java.util.Vector;
+import java.util.HashMap;
 
 
 public class CalendarListActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     SimpleCursorAdapter mAdapter;
 
-    Vector<Integer> calIds = new Vector<Integer>();
+    HashMap<Integer, Integer> calIds = new HashMap<Integer, Integer>();
 
     static final String[] CALENDAR_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
@@ -95,7 +95,7 @@ public class CalendarListActivity extends ListActivity implements LoaderManager.
                     return true;
                 }
                 else if (CalendarContract.Calendars._ID.equals(name)) {
-                    calIds.add(cursor.getPosition(), cursor.getInt(columnIndex));
+                    calIds.put(cursor.getPosition(), cursor.getInt(columnIndex));
                     return true;
                 }
                 return false;
@@ -135,7 +135,7 @@ public class CalendarListActivity extends ListActivity implements LoaderManager.
         // open color picker
         int color = ((ColorDrawable) v.findViewById(R.id.color).getBackground()).getColor();
         String name = ((TextView) v.findViewById(R.id.displayname)).getText().toString();
-        int cal_id = calIds.elementAt( position );
+        int cal_id = calIds.get(position);
 
         Intent intent = new Intent(this, ColorPickerActivity.class);
 
