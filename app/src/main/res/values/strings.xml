@@ -6,5 +6,7 @@
     <string name="title_activity_color_picker">ColorPickerActivity</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="color_hex_field_hint">rrggbb</string>
+    <string name="color_hex_field_text">#</string>
 
 </resources>

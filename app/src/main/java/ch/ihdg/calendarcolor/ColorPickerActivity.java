@@ -3,20 +3,19 @@ package ch.ihdg.calendarcolor;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
-
-import ch.ihdg.calendarcolor.R;
 
 public class ColorPickerActivity extends Activity {
 
@@ -44,6 +43,55 @@ public class ColorPickerActivity extends Activity {
 
         picker.setColor(color);
         picker.setOldCenterColor(color);
+
+        //write color hex code in text field
+        final EditText hexText = (EditText) findViewById(R.id.hexText);
+        String red = String.format("%02x", (color >> 16) & 0xFF ),
+               green = String.format("%02x", (color >> 8) & 0xFF),
+               blue = String.format("%02x", color & 0xFF);
+        hexText.setText( red + green + blue );
+        findViewById(R.id.dummy).requestFocus();
+
+        //update hex value when color changes
+        picker.setOnColorChangedListener( new ColorPicker.OnColorChangedListener() {
+            @Override
+            public void onColorChanged(int color) {
+                //write color hex code in text field
+                String hex = String.format("%02x", (color >> 16) & 0xFF ) +
+                             String.format("%02x", (color >> 8) & 0xFF) +
+                             String.format("%02x", color & 0xFF);
+                if(!hexText.getText().toString().equals(hex)) {
+                    hexText.setText( hex );
+                }
+            }
+        });
+
+        //update color picker when a valid hex code is entered
+        hexText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if( s.length() == 6 )
+                {
+                    try{
+                        int color = Color.parseColor('#' + s.toString());
+                        if( picker.getColor() != color ) {
+                            picker.setColor( color );
+                        }
+                        hexText.setTextColor( Color.BLACK );
+                    }
+                    catch ( IllegalArgumentException e ) {
+                        //ignore
+                        hexText.setTextColor( Color.RED );
+                    }
+                }
+            }
+        });
 
         final Button buttoncancel = (Button) findViewById(R.id.buttoncancel);
         buttoncancel.setOnClickListener(new View.OnClickListener() {
