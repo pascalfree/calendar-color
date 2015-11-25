@@ -22,13 +22,14 @@ public class ColorPickerActivity extends Activity {
     static final String ARG_NAME = "arg_name";
     static final String ARG_ID = "arg_id";
     static final String ARG_COLOR = "arg_color";
+    int currentColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_picker);
 
-        int color = getIntent().getIntExtra(ARG_COLOR, 0);
+        currentColor = getIntent().getIntExtra(ARG_COLOR, 0);
         String name = getIntent().getStringExtra(ARG_NAME);
         final int cal_id = getIntent().getIntExtra(ARG_ID, 0);
 
@@ -41,21 +42,23 @@ public class ColorPickerActivity extends Activity {
         picker.addSaturationBar(saturationBar);
         picker.addValueBar(valueBar);
 
-        picker.setColor(color);
-        picker.setOldCenterColor(color);
+        picker.setColor(currentColor);
+        picker.setOldCenterColor(currentColor);
 
         //write color hex code in text field
         final EditText hexText = (EditText) findViewById(R.id.hexText);
-        String red = String.format("%02x", (color >> 16) & 0xFF ),
-               green = String.format("%02x", (color >> 8) & 0xFF),
-               blue = String.format("%02x", color & 0xFF);
+        String red = String.format("%02x", (currentColor >> 16) & 0xFF ),
+               green = String.format("%02x", (currentColor >> 8) & 0xFF),
+               blue = String.format("%02x", currentColor & 0xFF);
         hexText.setText( red + green + blue );
         findViewById(R.id.dummy).requestFocus();
 
         //update hex value when color changes
-        picker.setOnColorChangedListener( new ColorPicker.OnColorChangedListener() {
+        final ColorPicker.OnColorChangedListener colorPickerListener = new ColorPicker.OnColorChangedListener() {
             @Override
             public void onColorChanged(int color) {
+                //store new color
+                currentColor = color;
                 //write color hex code in text field
                 String hex = String.format("%02x", (color >> 16) & 0xFF ) +
                              String.format("%02x", (color >> 8) & 0xFF) +
@@ -64,7 +67,8 @@ public class ColorPickerActivity extends Activity {
                     hexText.setText( hex );
                 }
             }
-        });
+        };
+        picker.setOnColorChangedListener( colorPickerListener );
 
         //update color picker when a valid hex code is entered
         hexText.addTextChangedListener(new TextWatcher() {
@@ -81,7 +85,11 @@ public class ColorPickerActivity extends Activity {
                     try{
                         int color = Color.parseColor('#' + s.toString());
                         if( picker.getColor() != color ) {
-                            picker.setColor( color );
+                            //Do not update hex field from color picker, after typing the value
+                            picker.setOnColorChangedListener(null);
+                            picker.setColor(color);
+                            currentColor = color;
+                            picker.setOnColorChangedListener( colorPickerListener );
                         }
                         hexText.setTextColor( Color.BLACK );
                     }
@@ -107,7 +115,7 @@ public class ColorPickerActivity extends Activity {
             public void onClick(View view) {
                 ContentValues values = new ContentValues();
                 // set the new color for the calendar
-                values.put(CalendarContract.Calendars.CALENDAR_COLOR, picker.getColor());
+                values.put(CalendarContract.Calendars.CALENDAR_COLOR, currentColor);
                 Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, cal_id);
                 getContentResolver().update(updateUri, values, null, null);
 
