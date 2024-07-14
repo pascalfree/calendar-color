@@ -8,5 +8,9 @@
     <string name="save">Save</string>
     <string name="color_hex_field_hint">rrggbb</string>
     <string name="color_hex_field_text">#</string>
+    <string name="cant_use">This app can\'t work without calendar permissions. 😢</string>
+    <string name="go_to_settings">Go to your phone settings to give this app the calendar permissions.</string>
+    <string name="grant_calendar_permissions">Grant Calendar Permissions</string>
+    <string name="explain_permissions">This app requires the calendar read and write permissions to be able to edit their color.</string>
 
 </resources>

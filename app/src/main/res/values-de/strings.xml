@@ -6,5 +6,9 @@
     <string name="title_activity_color_picker">ColorPickerActivity</string>
     <string name="cancel">Abbrechen</string>
     <string name="save">Speichern</string>
+    <string name="cant_use">Diese App funktioniert nicht ohne die Kalender-Berechtigungen. 😢</string>
+    <string name="go_to_settings">Öffne die Geräte-Einstellungen um dieser App die Kalender-Berechtigungen zu geben.</string>
+    <string name="grant_calendar_permissions">Zugriff auf Kalender gewähren</string>
+    <string name="explain_permissions">Diese App benötigt die Berechtigung zum Lesen und Schreiben der Kalender, um deren Farben ändern zu können.</string>
 
 </resources>
