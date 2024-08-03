@@ -11,7 +11,7 @@ android {
         applicationId = "ch.ihdg.calendarcolor"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 5
         versionName = "0.5"
         vectorDrawables {
             useSupportLibrary = true
