@@ -1,0 +1,16 @@
+Eine einfache App zum Ändern der Farbe eines Kalenders in Android 6+.
+Getestet mit Kalendern von Baikal.
+
+<b>Bekannte Probleme:</b>
+
+Die Farbe unterscheidet sich geringfügig von der, die die Google-Kalender-App anzeigt.
+Die Google-Kalender-App scheint die Farben ein wenig zu optimieren. Die in
+owncloud eingestellten Farben unterscheiden sich in der Google-Kalender-App ebenfalls geringfügig.
+
+Die Farbe ändert sich nach einiger Zeit wieder: Viele Kalenderdienste überschreiben die
+Farbe beim Synchronisieren. Stellen Sie die Farbe stattdessen direkt im Dienst ein (z. B. Google,
+owncloud).
+
+<b>Danksagung:</b>
+
+HoloColorPicker – <a href="https://github.com/LarsWerkman/HoloColorPicker">https://github.com/LarsWerkman/HoloColorPicker</a>

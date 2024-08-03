@@ -1,7 +1,7 @@
-A simple app to change to color of a calendar in android 6+. Tested with
+A simple app to change the color of a calendar in android 6+. Tested with
 calendars provided by baikal.
 
-<b>Issues:</b>
+<b>Kown Issues:</b>
 
 The color is slightly different from what the google calendar app is showing.
 The google calendar app seems to tweak the colors a little bit. Colors set in
